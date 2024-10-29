@@ -63,10 +63,25 @@
             android:layout_height="wrap_content"
             android:text="Select Birthdate"/>
 
-        <CalendarView
-            android:id="@+id/calendarView"
+        <Button
+            android:id="@+id/btnToggleCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Calendar" />
+
+        <LinearLayout
+            android:id="@+id/calendarContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <Spinner
             android:id="@+id/spProvince"

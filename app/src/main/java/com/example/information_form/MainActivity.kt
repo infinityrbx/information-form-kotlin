@@ -2,6 +2,7 @@ package com.example.information_form
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.CheckBox
@@ -13,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +23,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spDistrict: Spinner
     private lateinit var spWard: Spinner
 
+    private lateinit var calendarContainer: LinearLayout
+    private lateinit var calendarView: CalendarView
+    private lateinit var btnToggleCalendar: Button
+    private lateinit var tvBirthdate: TextView
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         // Initialize AddressHelper with resources
         addressHelper = AddressHelper(resources)
-
         spProvince = findViewById(R.id.spProvince)
         spDistrict = findViewById(R.id.spDistrict)
         spWard = findViewById(R.id.spWard)
@@ -49,10 +54,28 @@ class MainActivity : AppCompatActivity() {
         val btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
         // Set calendar listener
-        val tvBirthdate = findViewById<TextView>(R.id.tvBirthdate)
-        val calendarView = findViewById<CalendarView>(R.id.calendarView)
+        calendarContainer = findViewById(R.id.calendarContainer)
+        calendarView = findViewById(R.id.calendarView)
+        btnToggleCalendar = findViewById(R.id.btnToggleCalendar)
+        tvBirthdate = findViewById(R.id.tvBirthdate)
+
+        btnToggleCalendar.text = "Show Calendar"
+
+        btnToggleCalendar.setOnClickListener {
+            if (calendarContainer.visibility == View.GONE) {
+                calendarContainer.visibility = View.VISIBLE
+                btnToggleCalendar.text = "Hide Calendar"
+            } else {
+                calendarContainer.visibility = View.GONE
+                btnToggleCalendar.text = "Show Calendar"
+            }
+        }
+
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            tvBirthdate.text = "$dayOfMonth/${month + 1}/$year"
+            val date = "$dayOfMonth/${month + 1}/$year"
+            tvBirthdate.text = date
+            calendarContainer.visibility = View.GONE
+            btnToggleCalendar.text = "Show Calendar"
         }
 
         // Set button click listener
